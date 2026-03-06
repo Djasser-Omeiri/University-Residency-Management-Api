@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../BusinessAccessLayer/BusinessAccessLayer.csproj" />
+  <Project Path="../DataAccessLayer/DataAccessLayer.csproj" />
+  <Project Path="UniversityResidencyApi.csproj" />
+</Solution>
