@@ -60,8 +60,8 @@ namespace DataAccessLayer
                 command.Parameters.AddWithValue("@Age", StudentDto.Age);
                 command.Parameters.AddWithValue("@RoomID", StudentDto.RoomID);
                 connection.Open();
-                command.ExecuteNonQuery();
-                return true;
+                int AffectedRows=command.ExecuteNonQuery();
+                return AffectedRows>0;
             }
         }
         public static bool DeleteStudent(int StudentID)
@@ -72,7 +72,7 @@ namespace DataAccessLayer
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@StudentID", StudentID);
                 connection.Open();
-                int AffectedRows = (int)command.ExecuteScalar();
+                int AffectedRows = command.ExecuteNonQuery();
                 return AffectedRows == 1;
             }
         }

@@ -54,8 +54,8 @@ namespace DataAccessLayer
                 command.Parameters.AddWithValue("@StudentID", CardDto.StudentID);
                 command.Parameters.AddWithValue("@CardNumber", CardDto.CardNumber);
                 connection.Open();
-                command.ExecuteNonQuery();
-                return true;
+                int AffectedRows=command.ExecuteNonQuery();
+                return AffectedRows>0;
             }
         }
         public static bool DeleteCard(int CardID)
@@ -65,7 +65,8 @@ namespace DataAccessLayer
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@CardID", CardID);
-                int AffectedRows = (int)command.ExecuteScalar();
+                connection.Open();
+                int AffectedRows = command.ExecuteNonQuery();
                 return AffectedRows == 1;
             }
         }
