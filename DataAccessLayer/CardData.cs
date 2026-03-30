@@ -52,6 +52,7 @@ namespace DataAccessLayer
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@CardID", CardDto.CardID);
                 command.Parameters.AddWithValue("@StudentID", CardDto.StudentID);
+                command.Parameters.AddWithValue("@IsActive", CardDto.IsActive);
                 command.Parameters.AddWithValue("@CardNumber", CardDto.CardNumber);
                 connection.Open();
                 int AffectedRows=command.ExecuteNonQuery();
@@ -156,7 +157,7 @@ namespace DataAccessLayer
             }
         }
 
-        public static CardDTO GetCardByCardNumber(int CardNumber)
+        public static CardDTO GetCardByCardNumber(string CardNumber)
         {
             using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
             using (SqlCommand command = new SqlCommand("SP_GetCardByCardNumber", connection))

@@ -12,9 +12,9 @@ namespace DataAccessLayer
     {
         public int MealTypeID { get; set; }
         public string Name { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public MealTypeDTO(int MealTypeID, string Name, DateTime StartTime, DateTime EndTime)
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
+        public MealTypeDTO(int MealTypeID, string Name, TimeOnly StartTime, TimeOnly EndTime)
         {
             this.MealTypeID = MealTypeID;
             this.Name = Name;
@@ -24,15 +24,15 @@ namespace DataAccessLayer
     }
     public class MealTypeData
     {
-        public static int AddMealType(MealAccessLogDTO mealAccessLogDto)
+        public static int AddMealType(MealTypeDTO mealAccessLogDto)
         {
             using (SqlConnection connection = new SqlConnection(DataAccessSettings.ConnectionString))
             using (SqlCommand command = new SqlCommand("SP_AddMealType", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Name", mealAccessLogDto.MealTypeID);
-                command.Parameters.AddWithValue("@StartTime", mealAccessLogDto.AccessTime);
-                command.Parameters.AddWithValue("@EndTime", mealAccessLogDto.AccessTime);
+                command.Parameters.AddWithValue("@Name", mealAccessLogDto.Name);
+                command.Parameters.AddWithValue("@StartTime", mealAccessLogDto.StartTime);
+                command.Parameters.AddWithValue("@EndTime", mealAccessLogDto.EndTime);
                 var ReturnedValue = new SqlParameter("@ReturnVal", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
@@ -73,8 +73,8 @@ namespace DataAccessLayer
                             MealTypesList.Add(new MealTypeDTO(
                                 reader.GetInt32(reader.GetOrdinal("MealTypeID")),
                                 reader.GetString(reader.GetOrdinal("Name")),
-                                reader.GetDateTime(reader.GetOrdinal("StartTime")),
-                                reader.GetDateTime(reader.GetOrdinal("EndTime"))
+                                TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("StartTime"))),
+                                TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("EndTime")))
                             ));
                         }
                     }
@@ -98,8 +98,8 @@ namespace DataAccessLayer
                         return new MealTypeDTO(
                             reader.GetInt32(reader.GetOrdinal("MealTypeID")),
                             reader.GetString(reader.GetOrdinal("Name")),
-                            reader.GetDateTime(reader.GetOrdinal("StartTime")),
-                            reader.GetDateTime(reader.GetOrdinal("EndTime"))
+                            TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("StartTime"))),
+                            TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("EndTime")))
                         );
                     }
                     else
