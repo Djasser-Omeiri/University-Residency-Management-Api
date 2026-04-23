@@ -8,6 +8,6 @@ namespace DataAccessLayer
 {
     public class DataAccessSettings
     {
-        public static string ConnectionString = "Server=.;Database=UniversityResidency;User Id=sa;Password=123456;Trusted_connection=True";
+        public static string ConnectionString = "Server=.;Database=UniversityResidency;Trusted_connection=True;TrustServerCertificate=True";
     }
 }

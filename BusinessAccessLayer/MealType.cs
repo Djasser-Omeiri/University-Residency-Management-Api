@@ -35,7 +35,7 @@ namespace BusinessAccessLayer
         {
             return MealTypeData.UpdateMealType(this.MDTO);
         }
-        public bool DeleteMealType(int MealTypeID)
+        public static bool DeleteMealType(int MealTypeID)
         {
             return MealTypeData.DeleteMealType(MealTypeID);
         }
@@ -43,7 +43,7 @@ namespace BusinessAccessLayer
         {
             return MealTypeData.GetAllMealTypes();
         }
-        public MealType GetMealTypeByID(int MealTypeID)
+        public static MealType GetMealTypeByID(int MealTypeID)
         {
             MealTypeDTO MDTO = MealTypeData.GetMealTypeByID(MealTypeID);
             if (MDTO != null)
