@@ -31,7 +31,7 @@ namespace DataAccessLayer
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Capacity", RoomDto.Capacity);
                 command.Parameters.AddWithValue("@RoomNumber", RoomDto.RoomNumber);
-                var returnParameter = new SqlParameter("@ReturnVal", SqlDbType.Int)
+                var returnParameter = new SqlParameter("@RoomID", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
                 };

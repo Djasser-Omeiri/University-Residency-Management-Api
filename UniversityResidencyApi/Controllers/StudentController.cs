@@ -37,7 +37,7 @@ namespace UniversityResidencyApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult UpdateStudent(int id, StudentDTO updatedStudent)
         {
-            if (updatedStudent is null || id != updatedStudent.StudentID || string.IsNullOrEmpty(updatedStudent.FirstName) || string.IsNullOrEmpty(updatedStudent.LastName) || updatedStudent.Age < 16
+            if (updatedStudent is null || string.IsNullOrEmpty(updatedStudent.FirstName) || string.IsNullOrEmpty(updatedStudent.LastName) || updatedStudent.Age < 16
                 || updatedStudent.RoomID <= 0)
             {
                 return BadRequest("Student data is invalid.");

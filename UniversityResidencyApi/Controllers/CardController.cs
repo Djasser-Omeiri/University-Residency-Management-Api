@@ -31,18 +31,18 @@ namespace UniversityResidencyApi.Controllers
             return CreatedAtAction(nameof(GetByCardID), new { CardID = newCard.CardID }, newCard);
         }
 
-        [HttpGet("{CardID}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<CardDTO> GetByCardID(int CardID)
+        public ActionResult<CardDTO> GetByCardID(int id)
         {
-            if (CardID < 1)
+            if (id < 1)
             {
                 return BadRequest("The card id is invalid.");
             }
 
-            Card card = Card.GetCardByCardID(CardID);
+            Card card = Card.GetCardByCardID(id);
             if (card == null)
             {
                 return NotFound();
@@ -52,18 +52,18 @@ namespace UniversityResidencyApi.Controllers
             return Ok(cardDTO);
         }
 
-        [HttpGet("ByStudentID{StudentID}")]
+        [HttpGet("ByStudentID/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public ActionResult<CardDTO> GetByStudentID(int StudentID)
+        public ActionResult<CardDTO> GetByStudentID(int id)
         {
-            if (StudentID < 1)
+            if (id < 1)
             {
                 return BadRequest("The student id is invalid.");
             }
-            List<CardDTO> cardDto = Card.GetCardByStudentID(StudentID);
+            List<CardDTO> cardDto = Card.GetCardByStudentID(id);
             if (cardDto == null)
             {
                 return NotFound();
@@ -71,18 +71,18 @@ namespace UniversityResidencyApi.Controllers
             return Ok(cardDto);
         }
 
-        [HttpGet("ByCardNumber{CardNumber}")]
+        [HttpGet("ByCardNumber/{cardNumber}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public ActionResult<CardDTO> GetByCardNumber(string CardNumber)
+        public ActionResult<CardDTO> GetByCardNumber(string cardNumber)
         {
-            if (string.IsNullOrEmpty(CardNumber))
+            if (string.IsNullOrEmpty(cardNumber))
             {
                 return BadRequest("The card number is invalid.");
             }
-            Card card = Card.GetCardByCardNumber(CardNumber);
+            Card card = Card.GetCardByCardNumber(cardNumber);
             if (card == null)
             {
                 return NotFound();
@@ -111,7 +111,7 @@ namespace UniversityResidencyApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult UpdateCard(int CardID, CardDTO updatedCard)
         {
-            if (CardID < 1 || updatedCard == null || CardID != updatedCard.CardID)
+            if (CardID < 1 || updatedCard == null)
             {
                 return BadRequest("Invalid Card data");
             }
