@@ -33,7 +33,7 @@ namespace DataAccessLayer
                 command.Parameters.AddWithValue("@Name", mealAccessLogDto.Name);
                 command.Parameters.AddWithValue("@StartTime", mealAccessLogDto.StartTime);
                 command.Parameters.AddWithValue("@EndTime", mealAccessLogDto.EndTime);
-                var ReturnedValue = new SqlParameter("@ReturnVal", SqlDbType.Int)
+                var ReturnedValue = new SqlParameter("@MealTypeID", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
                 };
