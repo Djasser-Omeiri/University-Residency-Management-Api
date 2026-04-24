@@ -16,7 +16,7 @@ namespace UniversityResidencyApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CardDTO> AddCard(CardDTO newCard)
         {
-            if (newCard == null)
+            if (newCard == null || string.IsNullOrWhiteSpace(newCard.CardNumber) || newCard.StudentID < 1)
             {
                 return BadRequest("Invalid Card data");
             }
@@ -28,7 +28,7 @@ namespace UniversityResidencyApi.Controllers
             }
             newCard.CardID = card.CardID;
 
-            return CreatedAtRoute(nameof(GetByCardID), new { CardID = newCard.CardID }, newCard);
+            return CreatedAtAction(nameof(GetByCardID), new { CardID = newCard.CardID }, newCard);
         }
 
         [HttpGet("{CardID}")]
@@ -108,7 +108,8 @@ namespace UniversityResidencyApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CardDTO> UpdateCard(int CardID, CardDTO updatedCard)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult UpdateCard(int CardID, CardDTO updatedCard)
         {
             if (CardID < 1 || updatedCard == null || CardID != updatedCard.CardID)
             {
@@ -122,7 +123,10 @@ namespace UniversityResidencyApi.Controllers
             existingCard.StudentID = updatedCard.StudentID;
             existingCard.IsActive = updatedCard.IsActive;
             existingCard.CardNumber = updatedCard.CardNumber;
-            existingCard.Save();
+            if (!existingCard.Save())
+            {
+                return StatusCode(500, "Failed to update Card");
+            }
             return NoContent();
         }
 
